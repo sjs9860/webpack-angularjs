@@ -6,9 +6,10 @@
   "author": "Jay",
   "license": "MIT",
   "dependencies": {
+    "@uirouter/angularjs": "^1.0.30",
     "angular": "^1.8.3",
     "angular-route": "^1.8.3",
-    "@uirouter/angularjs": "^1.0.30"
+    "oclazyload": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",

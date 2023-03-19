@@ -1,27 +1,24 @@
-import angular from "angular";
-import ngRoute from "angular-route";
-import uiRouter from '@uirouter/angularjs';
+import { module_app } from "./module";
 
-// import login from './login/login.controler';
-import { loginComponent } from "./login/login.component";'./login/login.component';
+// import "./login/login.component";
 import httpService from './services/http.services';
 
-const app = angular.module('myApp', ['ngRoute', 'ui.router']);
-
-app.config([
+module_app.config([
   '$locationProvider',
   '$httpProvider',
-  '$routeProvider',
-  '$controllerProvider',
+  // '$routeProvider',
+  '$urlServiceProvider',
   '$stateProvider',
+  '$ocLazyLoadProvider',
   function(
     $locationProvider,
     $httpProvider,
-    $routeProvider,
-    $controllerProvider,
-    $stateProvider
+    // $routeProvider,
+    $urlServiceProvider,
+    $stateProvider,
+    $ocLazyLoadProvider
   ) {
-  // $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(true);
   // $routeProvider
   //   .when('/', {
   //     controller: 'homeCtrl',
@@ -31,6 +28,20 @@ app.config([
   //     controller: 'loginCtrl',
   //     template: login.loginTemplate
   //   })
+
+  $ocLazyLoadProvider.config({
+    debug: true,
+    events: true,
+    // modules: [
+    //   {
+    //     name: 'LoginModule',
+    //     files: [
+    //       './login/login.component.js'
+    //     ]
+    //   }
+    // ]
+  })
+
   var homeState = {
     name: 'home',
     url: '/',
@@ -38,18 +49,29 @@ app.config([
   }
 
   var loginState = {
-    name: 'login',
+    name: 'login.**',
     url: '/login',
-    component: 'login'
+    lazyLoad: ($transition$) => {
+      const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad')
+      return import('./login/login.module').then(mod => $ocLazyLoad.load(mod.default))
+      // return $ocLazyLoad.load('./login/login.component.js');
+    },
+    // component: 'login',
+    // resolve: {
+    //   loadDependencies: ['$ocLazyLoad', function($ocLazyLoad) {
+    //     return $ocLazyLoad.load('LoginModule');
+    //   }]
+    // }
   }
 
-  $stateProvider.state('home', homeState).state('login', loginState);
+  $stateProvider.state('home', homeState).state(loginState);
+  $urlServiceProvider.rules.initial('/');
+  $urlServiceProvider.rules.otherwise('/');
 }])
 
-app.service('httpService', httpService);
+module_app.service('httpService', httpService);
 
 // app.controller('loginCtrl', login.loginController)
-app.controller('homeCtrl', function($scope) {
+module_app.controller('homeCtrl', function($scope) {
   $scope.title = 'home';
 })
-app.component('login', loginComponent)

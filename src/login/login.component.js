@@ -1,4 +1,5 @@
 import loginTemplate from './login.html';
+import { module_app } from '../module';
 
 loginController.$inject = ['$scope', 'httpService'];
 function loginController($scope, httpService) {
@@ -8,7 +9,7 @@ function loginController($scope, httpService) {
   httpService.login();
 }
 
-export const loginComponent = {
+module_app.component('login', {
   controller: loginController,
   template: loginTemplate
-}
+})

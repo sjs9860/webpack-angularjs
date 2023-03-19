@@ -37,7 +37,12 @@ module.exports = {
       template: 'src/index.html',
     })
   ],
-  optimization: {
-    minimize: true,
+  // optimization: {
+  //   minimize: true,
+  // },
+  resolve: {
+    alias: {
+      './login/login.component.js': path.resolve(__dirname, './login/login.component.js'),
+    }
   }
 };
