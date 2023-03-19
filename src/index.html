@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Webpack AngularJS</title>
+    <base href="/">
+  </head>
+  <body ng-app="myApp">
+    <div>
+      <!-- <a href="/login">Login</a>
+      <a href="/">Home</a>
+      <div ng-view></div> -->
+      <a ui-sref="login" ui-sref-active="active">Login</a>
+      <a ui-sref="home" ui-sref-active="active">Home</a>
+      <ui-view></ui-view>
+    </div>
+  </body>
+</html>
