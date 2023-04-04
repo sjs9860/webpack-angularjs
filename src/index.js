@@ -2,6 +2,7 @@ import { module_app } from "./module";
 
 // import "./login/login.component";
 import httpService from './services/http.services';
+import "./legacy/dummyBundle";
 
 module_app.config([
   '$locationProvider',
@@ -75,3 +76,5 @@ module_app.service('httpService', httpService);
 module_app.controller('homeCtrl', function($scope) {
   $scope.title = 'home';
 })
+
+console.log(dummy_bundle)

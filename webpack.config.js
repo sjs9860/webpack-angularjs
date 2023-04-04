@@ -21,7 +21,18 @@ module.exports = {
         test: /\.html$/,
         exclude: /index.html$/,
         use: 'html-loader'
-      }
+      },
+      {
+        test: /dummyBundle\.js/,
+        use: 'script-loader'
+      },
+      // {
+      //   test: /dummyBundle-module\.js/,
+      //   use: [{
+      //     loader: 'exports-loader',
+      //     options: 'dummy_bundle'
+      //   }]
+      // },
     ]
   },
   devtool: 'inline-source-map',
